@@ -1,17 +1,35 @@
-
-
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #e6d0a1;
 }
 
 .App {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.map {
-  margin: 50px auto 0 auto;
+.statistics .map {
+  margin: 30px auto 0 auto;
   height: 400px;
-  width: 80%;
+  width: 1000px;
+}
+
+.date-pickers {
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.date-pickers .container {
+  margin: 0 5%;
+}
+
+
+.get-stat {
+  margin-top: 20px;
 }
