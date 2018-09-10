@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DatePickers from "./components/DatePickers";
 import Statistics from "./components/Statistics";
-
+import "../node_modules/react-vis/dist/style.css";
 import './App.css';
 
 export default class App extends Component {
@@ -10,7 +10,7 @@ export default class App extends Component {
     this.state = {
       startDate: null,
       endDate: null,
-      isStatsShowed: true
+      isStatsShowed: false
     };
 
     this.handleOnChangeStartDate = this.handleOnChangeStartDate.bind(this);
@@ -21,14 +21,22 @@ export default class App extends Component {
 
   handleOnChangeStartDate(value) {
     if (value === null) {
-      this.setState({ startDate: null, endDate: null });
+      this.setState({ isStatsShowed: false, startDate: null, endDate: null });
     } else {
-      this.setState({ startDate: value });
+      if (this.state.isStatsShowed) {
+        this.setState({ isStatsShowed: false, startDate: value })
+      } else {
+        this.setState({ startDate: value });
+      }
     }
   }
 
   handleOnChangeEndDate(value) {
-    this.setState({ endDate: value });
+    if (this.state.isStatsShowed) {
+      this.setState({ isStatsShowed: false, endDate: value });
+    } else {
+      this.setState({ endDate: value });
+    }
   }
 
   handleClickGetButton() {

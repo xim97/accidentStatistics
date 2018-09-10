@@ -1,11 +1,18 @@
 html, body {
   height: 100%;
   margin: 0;
-  padding: 0;
-  background-color: #e6d0a1;
+  padding: 0;  
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .App {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.statistics {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -32,4 +39,9 @@ html, body {
 
 .get-stat {
   margin-top: 20px;
+}
+
+.plot-hint {
+  background-color: black;
+  padding: 5px 10px 5px 10px;
 }
