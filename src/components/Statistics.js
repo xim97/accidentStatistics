@@ -3,20 +3,16 @@ import { Map } from "./Map";
 import DiagramBoroughs from "./DiagramBoroughs";
 import DiagramDayOfTheWeek from "./DiagramDayOfTheWeek";
 import DiagramHours from "./DiagramHours";
-import { css } from 'react-emotion';
 import { ClipLoader } from "react-spinners";
-
-const override = css`    
-    margin: 100 auto;
-    border-color: red;
-`;
+import AllAccidents from "./AllAccidents";
+import getAccidentsWithChildrenCasualties from "../utils/getAccidentsWithChildrenCasualties";
 
 export default class Statistics extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            data: [],  
+            data: [],
             isLoading: false,
             error: null
         };
@@ -46,20 +42,22 @@ export default class Statistics extends Component {
                             new Date(element.date) <= dayAfterEndDate
                     )
                     );
-                    this.setState({
-                        data: result,
-                        isLoading: false
-                    });
+                    if (year >= that.props.endDate.getFullYear()) {
+                        this.setState({                           
+                            isLoading: false
+                        });
+                    } 
+                    this.setState({ data: result });
+
                 }
                 )
                 .catch(error => this.setState({ error: error, isLoading: false }));
         }
-    }   
+    }
 
     render() {
         if (this.state.isLoading) {
             return <ClipLoader
-                className={override}
                 loading={this.state.isLoading}
             />;
         }
@@ -68,8 +66,14 @@ export default class Statistics extends Component {
         }
         return (
             <div className="statistics">
+                <AllAccidents data={this.state.data} />
                 <h5>Heatmap of all accidents</h5>
                 <Map data={this.state.data}
+                    containerElement={<div className="map" />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                />
+                <h5>Heatmap of accidents with children paticapation</h5>
+                <Map data={getAccidentsWithChildrenCasualties(this.state.data)}
                     containerElement={<div className="map" />}
                     mapElement={<div style={{ height: `100%` }} />}
                 />
@@ -78,7 +82,7 @@ export default class Statistics extends Component {
                 <h5>Number of accident in every hour of the day(all and with children)</h5>
                 <DiagramHours data={this.state.data} />
                 <h5>Number of accidents in every borough(all and with children)</h5>
-                <DiagramBoroughs data={this.state.data} />       
+                <DiagramBoroughs data={this.state.data} />
             </div>
         );
     }
