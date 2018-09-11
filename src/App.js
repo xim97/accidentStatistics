@@ -47,7 +47,7 @@ export default class App extends Component {
         this.state.startDate > new Date(2016, 5, 1) ||
         this.state.endDate < new Date(2005, 0, 1) ||
         this.state.endDate > new Date(2016, 5, 1)) {
-        alert("Choosen period isn't from 01.01.2005 to 01.06.2016");
+        alert("Choosen period isn't from 01.01.2005 to 06.01.2016");
       } else {
         this.setState({ isStatsShowed: true });
       }
@@ -55,6 +55,7 @@ export default class App extends Component {
   }
 
   render() {
+
     return (
       <div className="App">
         <h3>We have statistics only from 01.01.2005 to 01.06.2016</h3>
